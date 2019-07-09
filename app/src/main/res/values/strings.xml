@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">99Android</string>
+    <string name="text_view_all_notification">0</string>
+    <string name="text_view_pemberitahuan">PEMBERITAHUAN</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="default_notification_channel_name">Pemberitahuan</string>
+    <string name="symbol_readed">\u2713</string>
+    <string name="text_empty_notification">Tidak Ada Pemberitahuan</string>
+    <string name="notification_history_activity_label">Pemberitahuan</string>
+    <string name="notification_view_label">Detail</string>
+</resources>

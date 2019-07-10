@@ -19,7 +19,7 @@ public class Notifications implements Parcelable {
     private String title;
     private String body;
     private String date;
-    private String statusRead;
+    private String status_read;
 
     public Notifications() {
     }
@@ -29,7 +29,7 @@ public class Notifications implements Parcelable {
         this.title = in.readString();
         this.body = in.readString();
         this.date = in.readString();
-        this.statusRead = in.readString();
+        this.status_read = in.readString();
     }
 
     public int getId() {
@@ -64,12 +64,12 @@ public class Notifications implements Parcelable {
         this.date = date;
     }
 
-    public String getStatusRead() {
-        return statusRead;
+    public String getStatus_read() {
+        return status_read;
     }
 
-    public void setStatusRead(String statusRead) {
-        this.statusRead = statusRead;
+    public void setStatus_read(String status_read) {
+        this.status_read = status_read;
     }
 
     @Override
@@ -83,6 +83,6 @@ public class Notifications implements Parcelable {
         dest.writeString(this.title);
         dest.writeString(this.body);
         dest.writeString(this.date);
-        dest.writeString(this.statusRead);
+        dest.writeString(this.status_read);
     }
 }

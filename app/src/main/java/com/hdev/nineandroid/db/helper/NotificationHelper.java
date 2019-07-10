@@ -78,7 +78,7 @@ public class NotificationHelper {
     }
 
     private int getCount() {
-        Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + STATUS_READ + " LIKE '%"+"unread"+"%'", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + STATUS_READ + " LIKE '%" + "unread" + "%'", null);
         cursor.moveToFirst();
         int result = cursor.getCount();
         cursor.close();
@@ -95,7 +95,7 @@ public class NotificationHelper {
                 cv.put(TITLE, notifications.getTitle());
                 cv.put(BODY, notifications.getBody());
                 cv.put(DATE, notifications.getDate());
-                cv.put(STATUS_READ, notifications.getStatusRead());
+                cv.put(STATUS_READ, notifications.getStatus_read());
                 return database.insert(TABLE_NAME, null, cv);
             }
 
@@ -117,7 +117,7 @@ public class NotificationHelper {
                 cv.put(TITLE, notifications.getTitle());
                 cv.put(BODY, notifications.getBody());
                 cv.put(DATE, notifications.getDate());
-                cv.put(STATUS_READ, notifications.getStatusRead());
+                cv.put(STATUS_READ, notifications.getStatus_read());
                 return database.update(TABLE_NAME, cv, _ID + " = ?", new String[]{id});
             }
 
@@ -127,6 +127,10 @@ public class NotificationHelper {
                 Log.d("DEBUG_UPDATE", String.valueOf(integer));
             }
         }.execute();
+    }
+
+    public void delete(int id) {
+        database.delete(TABLE_NAME, _ID + "= '" + id + "'", null);
     }
 
 
@@ -144,7 +148,7 @@ public class NotificationHelper {
                 notifications.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(TITLE)));
                 notifications.setBody(cursor.getString(cursor.getColumnIndexOrThrow(BODY)));
                 notifications.setDate(cursor.getString(cursor.getColumnIndexOrThrow(DATE)));
-                notifications.setStatusRead(cursor.getString(cursor.getColumnIndexOrThrow(STATUS_READ)));
+                notifications.setStatus_read(cursor.getString(cursor.getColumnIndexOrThrow(STATUS_READ)));
                 notificationsList.add(notifications);
                 cursor.moveToNext();
             } while (!cursor.isAfterLast());

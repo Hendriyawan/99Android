@@ -30,43 +30,56 @@
             app:cardUseCompatPadding="true"
             app:contentPadding="5dp">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp">
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/text_view_title"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:lines="2"
-                    android:maxWidth="200dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorPrimary"
-                    tools:text="SELAMAT DATANG DI 99 JITU" />
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/text_view_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    tools:text="2019-07-07 13:05" />
 
-                <TextView
-                    android:id="@+id/text_view_body"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:layout_below="@id/text_view_title"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="5dp"
-                    android:gravity="start"
-                    tools:text="Selamat datang di 99 Jitu, Nikmati banyak bonus." />
+                    <TextView
+                        android:id="@+id/text_view_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:layout_gravity="start"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorPrimary"
+                        tools:text="SELAMAT DATANG DI 99 JITU" />
 
-            </RelativeLayout>
+                    <me.biubiubiu.justifytext.library.JustifyTextView
+                        android:id="@+id/text_view_body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:layout_marginTop="8dp"
+                        tools:text="Selamat datang di 99 Jitu, Nikmati banyak bonus, Buka aplikasinya sekarang juka" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/text_view_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                        android:layout_alignParentEnd="true"
+                        tools:text="2019-07-07 13:05" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
 
 
         </android.support.v7.widget.CardView>

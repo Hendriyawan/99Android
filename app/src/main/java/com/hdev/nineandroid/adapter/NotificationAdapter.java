@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.hdev.nineandroid.R;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.biubiubiu.justifytext.library.JustifyTextView;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationHolder> {
     private Context context;
@@ -40,13 +42,19 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         notificationHolder.textViewTitle.setText(notifications.getTitle());
         notificationHolder.textViewBody.setText(notifications.getBody());
         notificationHolder.textViewDate.setText(notifications.getDate());
-        if (notifications.getStatusRead().equals("readed")) {
+        if (notifications.getStatus_read().equals("readed")) {
             notificationHolder.textViewStatusRead.setTextColor(context.getResources().getColor(android.R.color.holo_green_light));
         }
         notificationHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onNotificationClick.onClick(notifications);
+            }
+        });
+        notificationHolder.imageButtoDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onNotificationClick.onDeleteClick(notifications.getId());
             }
         });
     }
@@ -58,13 +66,16 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     public interface OnNotificationClick {
         void onClick(Notifications notifications);
+        void onDeleteClick(int id);
     }
 
     class NotificationHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.text_view_title_notification)
         TextView textViewTitle;
+        @BindView(R.id.image_button_delete_notification)
+        ImageButton imageButtoDelete;
         @BindView(R.id.text_view_body_notification)
-        TextView textViewBody;
+        JustifyTextView textViewBody;
         @BindView(R.id.text_view_status_read)
         TextView textViewStatusRead;
         @BindView(R.id.text_view_date_notification)

@@ -12,6 +12,7 @@ import com.hdev.nineandroid.db.model.Notifications;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.biubiubiu.justifytext.library.JustifyTextView;
 
 public class ViewNotification extends AppCompatActivity {
     @BindView(R.id.toolbar)
@@ -19,7 +20,7 @@ public class ViewNotification extends AppCompatActivity {
     @BindView(R.id.text_view_title)
     TextView textViewTitle;
     @BindView(R.id.text_view_body)
-    TextView textViewBody;
+    JustifyTextView textViewBody;
     @BindView(R.id.text_view_date)
     TextView textViewDate;
     private NotificationHelper notificationHelper;
@@ -67,12 +68,12 @@ public class ViewNotification extends AppCompatActivity {
         textViewBody.setText(notifications.getBody());
         textViewDate.setText(notifications.getDate());
 
-        if (notifications.getStatusRead().equals("unread")) {
+        if (notifications.getStatus_read().equals("unread")) {
             Notifications notificationsReaded = new Notifications();
             notificationsReaded.setTitle(notifications.getTitle());
             notificationsReaded.setBody(notifications.getBody());
             notificationsReaded.setDate(notifications.getDate());
-            notificationsReaded.setStatusRead("readed");
+            notificationsReaded.setStatus_read("readed");
             notificationHelper = new NotificationHelper(this);
             notificationHelper.open();
             notificationHelper.update(notificationsReaded, String.valueOf(notifications.getId()));

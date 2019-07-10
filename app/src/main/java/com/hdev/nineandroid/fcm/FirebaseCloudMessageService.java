@@ -20,6 +20,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.hdev.nineandroid.R;
 import com.hdev.nineandroid.db.helper.NotificationHelper;
 import com.hdev.nineandroid.db.model.Notifications;
+import com.hdev.nineandroid.utils.NotificationUtils;
 import com.hdev.nineandroid.view.NotificationHistoryActivity;
 
 import java.text.SimpleDateFormat;
@@ -54,53 +55,15 @@ public class FirebaseCloudMessageService extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             handleDebug("NOTIFICATION", remoteMessage);
             sendBroadcast(remoteMessage.getNotification().getTitle());
-            showNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
+            NotificationUtils.show(this, remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
             saveNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
         }
         if (remoteMessage.getData() != null) {
             handleDebug("DATA", remoteMessage);
             sendBroadcast(remoteMessage.getData().get("title"));
-            showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"));
+            NotificationUtils.show(this, remoteMessage.getData().get("title"), remoteMessage.getData().get("body"));
             saveNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"));
 
-        }
-    }
-
-    /*
-    show Notification
-     */
-    private void showNotification(String title, String body) {
-        Log.d("DEBUG", "showNotification");
-
-        String channel_id = getString(R.string.default_notification_channel_id);
-        String channel_name = getString(R.string.default_notification_channel_name);
-
-        Intent notificationHistoryChannelIntent = new Intent(this, NotificationHistoryActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationHistoryChannelIntent, PendingIntent.FLAG_ONE_SHOT);
-        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
-                channel_id)
-                .setSmallIcon(R.drawable.ic_notification_active)
-                .setContentTitle(title)
-                .setContentText(body)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .setSound(uri);
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        //check sdk version
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(channel_id, channel_name, NotificationManager.IMPORTANCE_DEFAULT);
-            builder.setChannelId(channel_id);
-
-            if (notificationManager != null) {
-                notificationManager.createNotificationChannel(notificationChannel);
-            }
-        }
-
-        Notification notification = builder.build();
-        if (notificationManager != null) {
-            notificationManager.notify(0, notification);
         }
     }
 
@@ -115,7 +78,7 @@ public class FirebaseCloudMessageService extends FirebaseMessagingService {
         notifications.setTitle(title);
         notifications.setBody(body);
         notifications.setDate(date);
-        notifications.setStatusRead("unread");
+        notifications.setStatus_read("unread");
         notificationHelper.insert(notifications);
     }
 

@@ -5,15 +5,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.hdev.nineandroid.R;
 import com.hdev.nineandroid.adapter.NotificationAdapter;
+import com.hdev.nineandroid.api.NotificationPresenter;
 import com.hdev.nineandroid.db.helper.NotificationHelper;
 import com.hdev.nineandroid.db.model.Notifications;
 import com.hdev.nineandroid.interfaces.NotificationView;
+import com.hdev.nineandroid.utils.AppPreferences;
 
 import java.util.List;
 
@@ -56,6 +60,10 @@ public class NotificationHistoryActivity extends AppCompatActivity implements No
     }
 
     @Override
+    public void onNotificationFirstLoaded(List<Notifications> notifications) {
+    }
+
+    @Override
     public void onNotificationLoaded(List<Notifications> notifications) {
         initReyclerView(notifications);
     }
@@ -70,9 +78,10 @@ public class NotificationHistoryActivity extends AppCompatActivity implements No
     /*
     Initialize
      */
-    private void initialize(){
+    private void initialize() {
         initToolbar();
         initToolbar();
+
         notificationHelper = new NotificationHelper(this);
         notificationHelper.open();
         notificationHelper.getAllNotification(this);
@@ -104,5 +113,11 @@ public class NotificationHistoryActivity extends AppCompatActivity implements No
         viewNotification.putExtra("parcelable_notification", notifications);
         startActivity(viewNotification);
 
+    }
+
+    @Override
+    public void onDeleteClick(int id) {
+        notificationHelper.delete(id);
+        notificationHelper.getAllNotification(this);
     }
 }

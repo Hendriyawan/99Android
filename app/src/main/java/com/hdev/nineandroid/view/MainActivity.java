@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.text.Html;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -17,22 +17,22 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hdev.nineandroid.R;
+import com.hdev.nineandroid.api.NotificationPresenter;
 import com.hdev.nineandroid.db.helper.NotificationHelper;
 import com.hdev.nineandroid.db.model.Notifications;
 import com.hdev.nineandroid.fcm.FirebaseCloudMessageService;
+import com.hdev.nineandroid.interfaces.NotificationView;
+import com.hdev.nineandroid.utils.AppPreferences;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NotificationView {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.text_count_notification)
@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initProgressBar();
         initWebView();
+        initDefaultNotification();
         notificationHelper = new NotificationHelper(this);
         notificationHelper.open();
 
@@ -100,8 +101,16 @@ public class MainActivity extends AppCompatActivity {
     /*
     Onclick
      */
+    @OnClick(R.id.relative_layout_text_view_notification)
+    public void relativeClick() {
+        startActivity(new Intent(this, NotificationHistoryActivity.class));
+    }
+
+    /*
+    OnClick
+     */
     @OnClick(R.id.text_count_notification)
-    public void viewNotification() {
+    public void textCountClick() {
         startActivity(new Intent(this, NotificationHistoryActivity.class));
     }
 
@@ -166,5 +175,51 @@ public class MainActivity extends AppCompatActivity {
                 progressBarHorizontal.setVisibility(View.GONE);
             }
         });
+    }
+
+    /*
+    Init default notification
+     */
+    private void initDefaultNotification() {
+        NotificationPresenter notificationPresenter = new NotificationPresenter(this, this);
+        notificationPresenter.laodNotification();
+    }
+
+    @Override
+    public void onNotificationFirstLoaded(List<Notifications> notifications) {
+        insertNotification(notifications);
+    }
+
+    @Override
+    public void onNotificationLoaded(List<Notifications> notifications) {
+
+    }
+
+    @Override
+    public void onDataEmpty() {
+
+    }
+
+    /*
+    Insert all first
+     */
+    private void insertNotification(List<Notifications> notifications) {
+        Notifications notification;
+        for (int i = 0; i < notifications.size(); i++) {
+            notification = new Notifications();
+
+            String title = notifications.get(i).getTitle();
+            String body = Html.fromHtml(notifications.get(i).getBody()).toString();
+            String date = notifications.get(i).getDate();
+            String status_read = notifications.get(i).getStatus_read();
+
+            notification.setTitle(title);
+            notification.setBody(body);
+            notification.setDate(date);
+            notification.setStatus_read(status_read);
+            notificationHelper.insert(notification);
+            notificationHelper.getCount(textViewCountNotification);
+        }
+        AppPreferences.setFistInstall(this, false);
     }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">99Android</string>
+    <string name="app_name">99 JITU</string>
     <string name="text_view_all_notification">0</string>
     <string name="text_view_pemberitahuan">PEMBERITAHUAN</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>

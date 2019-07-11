@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.ViewNotification"
+        <activity android:name=".view.ViewNotificationActivity"
             android:label="@string/notification_view_label"/>
 
         <activity android:name=".view.NotificationHistoryActivity"

@@ -39,9 +39,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull NotificationHolder notificationHolder, int position) {
         final Notifications notifications = notificationsList.get(position);
-        notificationHolder.textViewTitle.setText(notifications.getTitle());
-        notificationHolder.textViewBody.setText(notifications.getBody());
-        notificationHolder.textViewDate.setText(notifications.getDate());
+        notificationHolder.textViewTitle.setText(String.format(context.getResources().getString(R.string.text_title), notifications.getTitle()));
+        notificationHolder.textViewBody.setText(String.format(context.getResources().getString(R.string.text_body), notifications.getBody()));
+        notificationHolder.textViewDate.setText(String.format(context.getResources().getString(R.string.text_date), notifications.getDate()));
         if (notifications.getStatus_read().equals("readed")) {
             notificationHolder.textViewStatusRead.setTextColor(context.getResources().getColor(android.R.color.holo_green_light));
         }

@@ -8,4 +8,7 @@
     <string name="text_empty_notification">Tidak Ada Pemberitahuan</string>
     <string name="notification_history_activity_label">Pemberitahuan</string>
     <string name="notification_view_label">Detail</string>
+    <string name="text_title">%s</string>
+    <string name="text_body">%s\n</string>
+    <string name="text_date">%s</string>
 </resources>

@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.Html;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -76,7 +77,7 @@ public class FirebaseCloudMessageService extends FirebaseMessagingService {
         String date = new SimpleDateFormat("yyyy-mm-dd HH:MM:SS", Locale.getDefault()).format(new Date().getTime());
         Notifications notifications = new Notifications();
         notifications.setTitle(title);
-        notifications.setBody(body);
+        notifications.setBody(Html.fromHtml(body).toString());
         notifications.setDate(date);
         notifications.setStatus_read("unread");
         notificationHelper.insert(notifications);
